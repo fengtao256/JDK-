@@ -37,7 +37,7 @@ import java.util.function.Consumer;
  * <strong>
  * <a href="{@docRoot}/../technotes/guides/language/foreach.html">For-each Loop</a>
  * </strong>
- *
+ * 迭代返回的的类型是<T>，for-each是增强的for循环
  * @param <T> the type of elements returned by the iterator
  *
  * @since 1.5
@@ -54,6 +54,8 @@ public interface Iterable<T> {
 
     /**
      * 为迭代器的每个元素完成指定的操作，直到迭代完毕或者抛出异常
+     * 除非实现类有自己的实现，否则按照迭代的顺序进行执行
+     * 抛出的异常将会返回给调用者
      * Performs the given action for each element of the {@code Iterable}
      * until all elements have been processed or the action throws an
      * exception.  Unless otherwise specified by the implementing class,
@@ -63,12 +65,14 @@ public interface Iterable<T> {
      *
      * @implSpec
      * <p>The default implementation behaves as if:
+     * //类似的实现举例
      * <pre>{@code
      *     for (T t : this)
      *         action.accept(t);
      * }</pre>
-     *
+     * action是为每个元素执行的操作
      * @param action The action to be performed for each element
+     * action为空则抛出空指针异常
      * @throws NullPointerException if the specified action is null
      * @since 1.8
      */
